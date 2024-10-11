@@ -12,4 +12,4 @@
 
 Приложение polls_app представляет собой систему сбора данных с помощью форм "Опрос" и возможность отслеживания данных.
 
-![Диаграмма без названия drawio(1)](https://github.com/user-attachments/assets/063a56bc-7f61-4b78-a158-afcc6585d26d)
+![Диаграмма без названия drawio(2)](https://github.com/user-attachments/assets/6884a5af-ef12-426e-846a-6ba672c3b40f)
