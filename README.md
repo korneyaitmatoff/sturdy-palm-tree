@@ -7,5 +7,5 @@
 - Базу данных для хранения результатов опроса
 - Веб-приложения для прогнозирования результатов опроса
 
-Архитектура описана ниже:
-  ![Диаграмма без названия drawio](https://github.com/user-attachments/assets/e640d8bc-37aa-4e5e-94f2-5508dbdc8e35)
+
+![Диаграмма без названия drawio](https://github.com/user-attachments/assets/e640d8bc-37aa-4e5e-94f2-5508dbdc8e35)
