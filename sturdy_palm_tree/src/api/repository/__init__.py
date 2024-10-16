@@ -1,0 +1,2 @@
+from sturdy_palm_tree.src.api.repository.student_repository import StudentRepository
+from sturdy_palm_tree.src.api.repository.audit_poll_repositorypy import AuditPollRepository
