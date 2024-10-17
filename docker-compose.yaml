@@ -1,11 +1,5 @@
 version: "3.8"
 services:
-#  reflex_app:
-#    image: django-polls-app
-#    ports:
-#      - 8000:8000
-#    networks:
-#      - sturdy_palm_tree
   postgres:
     image: postgres
     environment:
