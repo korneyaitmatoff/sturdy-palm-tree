@@ -10,11 +10,11 @@ class Students(base):
     id = Column(type_=Integer, primary_key=True, autoincrement=True)
     name = Column(type_=VARCHAR, )
     gender = Column(type_=VARCHAR, )
-    performance = Column(type_=Integer, )  # from 0 to 100
-    stress = Column(type_=Integer, )  # уровень стресса от 0 до 10
-    family_alcohol = Column(type_=Boolean, )  # алкоголь в семье
-    classmates_relations = Column(type_=Boolean, )  # давление со стороны одноклассников
-    alcohol_forecast = Column(type_=Boolean, default=False)  # целевая переменная: склонность к алкоголизму
+    performance = Column(type_=Integer, )
+    stress = Column(type_=Integer, )
+    family_alcohol = Column(type_=Boolean, )
+    classmates_relations = Column(type_=Boolean, ) 
+    alcohol_forecast = Column(type_=Boolean, default=False)
 
 
 class AuditPolls(base):
