@@ -1,7 +1,5 @@
 from typing import Type, Any
 
-from sqlalchemy.orm import DeclarativeMeta
-
 from sturdy_palm_tree.src.api.core.db_handler import DatabaseHandler
 
 

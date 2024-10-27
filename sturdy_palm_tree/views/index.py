@@ -2,139 +2,106 @@ import flet as ft
 from flet_route import Basket, Params
 
 from sturdy_palm_tree import auth_required
-from sturdy_palm_tree.components import bottom_bar
+from sturdy_palm_tree.components import bottom_bar, get_pie_chart, get_col_chart
 
+from sturdy_palm_tree.src.api.depends import students_service
 
 @auth_required
 def index(page: ft.Page, params: Params, basket: Basket):
-    print(params)
-    print(basket)
-
-    normal_border = ft.BorderSide(0, ft.colors.with_opacity(0, ft.colors.WHITE))
-    hovered_border = ft.BorderSide(6, ft.colors.WHITE)
-
-    pie_chart = ft.PieChart(
-        sections=[
-            ft.PieChartSection(
-                50,
-                title="50% склонны к алкоголизму",
-                color=ft.colors.RED,
-                radius=80,
-                border_side=normal_border,
-            ),
-            ft.PieChartSection(
-                50,
-                title="50% находятся вне зоне риска",
-                color=ft.colors.GREEN,
-                radius=70,
-                border_side=normal_border,
-            ),
-        ],
-        sections_space=1,
-        center_space_radius=0,
-        expand=True,
+    pie_chart = get_pie_chart(
+        data=[
+            {
+                "title": "50% склонны к алкоголизму",
+                "value": 50,
+            },
+            {
+                "title": "50% находятся вне зоне риска",
+                "value": 50,
+            },
+        ]
     )
 
-    chart = ft.BarChart(
-        bar_groups=[
-            ft.BarChartGroup(
-                x=0,
-                bar_rods=[
-                    ft.BarChartRod(
-                        from_y=0,
-                        to_y=40,
-                        width=40,
-                        tooltip="01.01.2024",
-                        border_radius=0,
-                    ),
-                ],
-            ),
-            ft.BarChartGroup(
-                x=1,
-                bar_rods=[
-                    ft.BarChartRod(
-                        from_y=0,
-                        to_y=100,
-                        width=40,
-                        tooltip="01.04.2024",
-                        border_radius=0,
-                    ),
-                ],
-            ),
-            ft.BarChartGroup(
-                x=2,
-                bar_rods=[
-                    ft.BarChartRod(
-                        from_y=0,
-                        to_y=30,
-                        width=40,
-                        tooltip="01.07.2024",
-                        border_radius=0,
-                    ),
-                ],
-            ),
-            ft.BarChartGroup(
-                x=3,
-                bar_rods=[
-                    ft.BarChartRod(
-                        from_y=0,
-                        to_y=60,
-                        width=40,
-                        tooltip="01.10.2024",
-                        border_radius=0,
-                    ),
-                ],
-            ),
-        ],
-        border=ft.border.all(1, ft.colors.GREY_400),
-        left_axis=ft.ChartAxis(
-            labels_size=40, title=ft.Text("График прогресса алкоголизма у школьников"), title_size=40
-        ),
-        bottom_axis=ft.ChartAxis(
-            labels=[
-                ft.ChartAxisLabel(
-                    value=0, label=ft.Container(ft.Text("01.01.2024"), padding=10)
-                ),
-                ft.ChartAxisLabel(
-                    value=1, label=ft.Container(ft.Text("01.03.2024"), padding=10)
-                ),
-                ft.ChartAxisLabel(
-                    value=2, label=ft.Container(ft.Text("01.07.2024"), padding=10)
-                ),
-                ft.ChartAxisLabel(
-                    value=3, label=ft.Container(ft.Text("01.10.2024"), padding=10)
-                ),
-            ],
-            labels_size=40,
-        ),
-        horizontal_grid_lines=ft.ChartGridLines(
-            color=ft.colors.GREY_300, width=1, dash_pattern=[3, 3]
-        ),
-        tooltip_bgcolor=ft.colors.with_opacity(0.5, ft.colors.GREY_300),
-        max_y=110,
-        interactive=True,
-        expand=True,
+    chart = get_col_chart(
+        title="LEFT AXIS",
+        data=[
+            {
+                "title": "pepe",
+                "value": 10,
+            },
+            {
+                "title": "pepe",
+                "value": 20,
+            },
+            {
+                "title": "pepe",
+                "value": 30,
+            },
+            {
+                "title": "pepe",
+                "value": 140,
+            },
+        ])
+
+    get_avg_audit_group_by_dates_chart = get_col_chart(
+        title="Динамика среднего балла шкалы AUDIT",
+        data=students_service.get_avg_audit_group_by_dates()
+    )
+
+    get_students_group_by_stress_chart = get_col_chart(
+        title="Влияние стресса на алкоголизм. Уровень стресса.",
+        data=students_service.get_students_group_by_stress()
+    )
+
+    get_students_group_by_perf_chart = get_col_chart(
+        title="Влияние успеваемости на алкоголизм. Уровень стресса",
+        data=students_service.get_students_group_by_perf()
+    )
+
+    get_students_group_by_age_chart = get_col_chart(
+        title="Влияние возраста на алкоголизм. Возрастные группы.",
+        data=students_service.get_students_group_by_age()
+    )
+
+    get_students_group_by_gender_chart = get_col_chart(
+        title="Соотношение студентов в зоне риска по половому признаку.",
+        data=students_service.get_students_group_by_gender()
+    )
+
+    get_students_group_by_alco_depends_chart = get_col_chart(
+        title="Кол-во студентов, находящихся в разных группах риска",
+        data=students_service.get_students_group_by_alco_depends()
     )
 
     return ft.View(
         route="/",
         controls=[
-            ft.Column(
-                controls=[
-                    ft.Row(
-                        controls=[
-                            ft.Text("Количество студентов: 10.\nКоличество пройденных опросов: 30"),
-                            pie_chart,
-                        ]
-                    ),
-                    ft.Row(
-                        controls=[
-                            chart
-                        ]
-                    ),
-                ]
+            ft.Row(
+                controls=[get_avg_audit_group_by_dates_chart],
+                alignment=ft.alignment.center
             ),
-            bottom_bar(page=page)
+            ft.Row(
+                controls=[get_students_group_by_stress_chart],
+                alignment=ft.alignment.center
+            ),
+            ft.Row(
+                controls=[get_students_group_by_perf_chart],
+                alignment=ft.alignment.center
+            ),
+            ft.Row(
+                controls=[get_students_group_by_age_chart],
+                alignment=ft.alignment.center
+            ),
+            ft.Row(
+                controls=[get_students_group_by_gender_chart],
+                alignment=ft.alignment.center
+            ),
+            ft.Row(
+                controls=[get_students_group_by_alco_depends_chart],
+                alignment=ft.alignment.center
+            ),
         ],
-        scroll=ft.ScrollMode.ALWAYS
+        scroll=ft.ScrollMode.ALWAYS,
+        bottom_appbar=bottom_bar(page=page),
+        spacing=100,
+        padding=20
     )

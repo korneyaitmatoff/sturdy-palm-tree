@@ -1,11 +1,11 @@
 import time
+from random import randint
 
 import flet as ft
 
 from sturdy_palm_tree.src.api.service import StudentService
 from sturdy_palm_tree.src.api.core import tables
 from config import db_config
-from sturdy_palm_tree.components.add_student_form import add_student_form
 
 
 def _get_rows(page) -> list:
@@ -20,10 +20,10 @@ def _get_rows(page) -> list:
             ft.DataCell(ft.Text(item.stress)),
             ft.DataCell(ft.Text(item.family_alcohol)),
             ft.DataCell(ft.Text(item.classmates_relations)),
-            ft.DataCell(ft.Text(item.alcohol_forecast)),
+            ft.DataCell(ft.Text(f"{item.alcohol_forecast}%")),
             ft.DataCell(
-                ft.CupertinoButton(text="profile",
-                                   on_click=lambda x, item_id=item.id: page.go(route=f"/student/{item_id}"))
+                ft.IconButton(icon=ft.icons.PERSON_2,
+                              on_click=lambda x, item_id=item.id: page.go(route=f"/student/{item_id}"))
             )
         ]
     ) for item in service.read()]

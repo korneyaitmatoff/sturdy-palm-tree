@@ -1,15 +1,20 @@
+from datetime import datetime
+
 from faker import Faker
+from pytest import mark
 
 from config import db_config
-from sturdy_palm_tree.src.api.service import AuditPollService
+from sturdy_palm_tree.src.api.service import AuditPollService, StudentService
 from sturdy_palm_tree.src.api.core import tables
 from sturdy_palm_tree.src.api.models import AuditPoll
 
 
 class TestAuditPoll:
     service = AuditPollService(table=tables.AuditPolls, **db_config)
+    students_service = StudentService(table=tables.Students, **db_config)
 
-    def test_create(self):
+    @mark.parametrize("std", list(students_service.read()), indirect=False)
+    def test_create(self, std):
         f = Faker()
 
         self.service.create(data=dict(AuditPoll(
@@ -23,6 +28,8 @@ class TestAuditPoll:
             field_8=f.random_int(0, 4),
             field_9=f.random_int(0, 4),
             field_10=f.random_int(0, 4),
+            created_at=f.date_between_dates(date_start=datetime(2020, 1, 1), date_end=datetime(2024, 12, 31)),
+            s_id=std.id
         )))
 
     def test_read(self):

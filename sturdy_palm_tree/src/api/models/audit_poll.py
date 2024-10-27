@@ -1,9 +1,12 @@
+import datetime
+
 from pydantic import BaseModel, StrictInt
 
 
 class AuditPoll(BaseModel):
     """Схема данных для бд"""
     id: StrictInt | None = None
+    created_at: datetime.datetime
     field_1: StrictInt
     field_2: StrictInt
     field_3: StrictInt

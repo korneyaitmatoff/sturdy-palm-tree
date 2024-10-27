@@ -1,7 +1,7 @@
 from typing import Type, Any
 
-from sqlalchemy import create_engine
-from sqlalchemy.orm import create_session, Session, DeclarativeMeta
+from sqlalchemy import create_engine, text
+from sqlalchemy.orm import create_session, Session
 
 
 class DatabaseHandler:
@@ -33,3 +33,12 @@ class DatabaseHandler:
 
     def create_tables(self, meta):
         meta.metadata.create_all(self.engine)
+
+    def execute_raw(self, raw: str, is_ddl: bool = False):
+        if not is_ddl:
+            return self.session.execute(statement=text(raw)).all()
+
+        self.session.execute(statement=text(raw))
+        self.session.commit()
+
+        return self.session.execute(statement=text("SELECT 1;")).all()
