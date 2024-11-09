@@ -48,12 +48,12 @@ def index(page: ft.Page, params: Params, basket: Basket):
     )
 
     get_students_group_by_stress_chart = get_col_chart(
-        title="Влияние стресса на алкоголизм. Уровень стресса.",
+        title="Влияние стресса на алкоголизм.\n Риск алкоголизма, %",
         data=students_service.get_students_group_by_stress()
     )
 
     get_students_group_by_perf_chart = get_col_chart(
-        title="Влияние успеваемости на алкоголизм. Уровень стресса",
+        title="Зависимость риска алкоголзима от успеваемости",
         data=students_service.get_students_group_by_perf()
     )
 
@@ -103,5 +103,5 @@ def index(page: ft.Page, params: Params, basket: Basket):
         scroll=ft.ScrollMode.ALWAYS,
         bottom_appbar=bottom_bar(page=page),
         spacing=100,
-        padding=20
+        padding=30
     )

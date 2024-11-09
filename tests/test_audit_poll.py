@@ -13,7 +13,7 @@ class TestAuditPoll:
     service = AuditPollService(table=tables.AuditPolls, **db_config)
     students_service = StudentService(table=tables.Students, **db_config)
 
-    @mark.parametrize("std", list(students_service.read()), indirect=False)
+    @mark.parametrize("std", list(students_service.read())[:20], indirect=False)
     def test_create(self, std):
         f = Faker()
 

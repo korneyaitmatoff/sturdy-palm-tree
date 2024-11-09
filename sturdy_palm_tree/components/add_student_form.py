@@ -15,7 +15,8 @@ def add_student_form(page: ft.Page):
                 performance.value,
                 stress.value,
                 family_alcohol.value,
-                classmates_relations.value
+                classmates_relations.value,
+                age.value
         ):
             page.snack_bar = ft.SnackBar(ft.Text("Заполните все поля!"))
             page.snack_bar.open = True
@@ -25,6 +26,7 @@ def add_student_form(page: ft.Page):
             StudentService(table=tables.Students, **db_config).create(data={
                 "name": name.value,
                 "gender": gender.value,
+                "age": age.value,
                 "performance": performance.value,
                 "stress": stress.value,
                 "family_alcohol": family_alcohol.value,
@@ -45,6 +47,13 @@ def add_student_form(page: ft.Page):
                     width=WIDTH,
                     text_size=14,
                     value=""
+                ),
+                age := ft.TextField(
+                    label="Возраст",
+                    border="underline",  # type: ignore
+                    width=WIDTH,
+                    text_size=14,
+                    keyboard_type=ft.KeyboardType.NUMBER
                 ),
                 gender := ft.Dropdown(
                     options=[

@@ -14,10 +14,17 @@ def students(page: ft.Page, params: Params, basket: Basket):
             ft.Row(
                 controls=[
                     add_student_form(page),
+                ],
+                spacing=20
+            ),
+            ft.Row(
+                controls=[
                     students_table(page),
                 ],
                 spacing=20
             )
         ],
-        bottom_appbar=bottom_bar(page=page)
+        bottom_appbar=bottom_bar(page=page),
+        scroll=ft.ScrollMode.ALWAYS,
     )
+
