@@ -6,6 +6,7 @@ from sturdy_palm_tree import auth_required
 from sturdy_palm_tree.components import bottom_bar
 from sturdy_palm_tree.src.api.core import tables
 from sturdy_palm_tree.src.api.service import StudentService
+from sturdy_palm_tree.components import get_col_chart
 
 
 @auth_required
@@ -26,17 +27,33 @@ def student(page: ft.Page, params: Params, basket: Basket):
                 ft.DataColumn(ft.Text("Алкоголь в семье")),
                 ft.DataColumn(ft.Text("Давление со стороны одноклассников")),
                 ft.DataColumn(ft.Text("Склонность к алкоголизму")),
+                ft.DataColumn(ft.Text("")),
             ],
             rows=[
                 ft.DataRow(cells=[
                     ft.DataCell(ft.Text(data["id"])),
                     ft.DataCell(ft.Text(data["name"])),
                     ft.DataCell(ft.Text(data["gender"])),
-                    ft.DataCell(ft.Text(data["performance"])),
-                    ft.DataCell(ft.Text(data["stress"])),
-                    ft.DataCell(ft.Text(data["family_alcohol"])),
-                    ft.DataCell(ft.Text(data["classmates_relations"])),
+                    ft.DataCell(ft.TextField(
+                        value=data["performance"]
+                    )),
+                    ft.DataCell(
+                        ft.TextField(
+                            value=data["stress"]
+                        )
+                    ),
+                    ft.DataCell(
+                        ft.TextField(
+                            value=data["family_alcohol"]
+                        )
+                    ),
+                    ft.DataCell(
+                        ft.TextField(
+                            value=data["classmates_relations"]
+                        )
+                    ),
                     ft.DataCell(ft.Text(data["alcohol_forecast"])),
+                    ft.DataCell(ft.IconButton(ft.icons.SAVE)),
                 ])
             ]
         )
@@ -45,10 +62,43 @@ def student(page: ft.Page, params: Params, basket: Basket):
     return ft.View(
         route="/student",
         controls=[
-            ft.Text("student"),
-            _get_student_table(data=_get_student(id=s_id)),
-            ft.CupertinoButton("Ссылка на опрос для данного студента",
-                               on_click=lambda x: page.go(route=f"/audit/{s_id}")),
+            ft.Row(
+                controls=[_get_student_table(data=_get_student(id=s_id)), ]
+            ),
+            ft.Row(
+                controls=[get_col_chart(
+                    title="Динамика шкалы AUDIT",
+                    data=[
+                        {
+                            "title": "01.01.2024",
+                            "value": 10,
+                        },
+                        {
+                            "title": "01.03.2024",
+                            "value": 15,
+                        },
+                        {
+                            "title": "01.05.2024",
+                            "value": 12,
+                        },
+                        {
+                            "title": "01.07.2024",
+                            "value": 3,
+                        },
+
+                    ]
+                )]
+            ),
+            ft.Row(
+                controls=[ft.CupertinoButton("Запустить прогнозирование")]
+            ),
+            ft.Row(
+                controls=[ft.Text("Последнее обновление: 12.11.2024 22:11")]
+            ),
+            ft.Row(
+                controls=[ft.CupertinoButton("Ссылка на опрос для данного студента",
+                                             on_click=lambda x: page.go(route=f"/audit/{s_id}"))]
+            ),
             bottom_bar(page=page)
         ]
     )
