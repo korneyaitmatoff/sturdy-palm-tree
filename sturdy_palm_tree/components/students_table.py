@@ -43,7 +43,7 @@ def students_table(page):
             ft.DataColumn(ft.Text("Уровень стресса")),
             ft.DataColumn(ft.Text("Алкоголь в семье")),
             ft.DataColumn(ft.Text("Давление со стороны одноклассников")),
-            ft.DataColumn(ft.Text("Склонность к алкоголизму")),
+            ft.DataColumn(ft.Text("Склонность к алкоголизму \n по прогнозу психолога")),
             ft.DataColumn(ft.IconButton(icon=ft.icons.UPDATE_ROUNDED, on_click=_onclick)),
             # ft.DataColumn(ft.CupertinoButton("Update", icon=ft.icons.UPDATE, on_click=_onclick), ),
         ],

@@ -17,7 +17,10 @@ def login(page: ft.Page, params: Params, basket: Basket):
         if password.value == "" or username.value == "":
             show_snack(text="Поля логин и пароль обязательные")
         else:
-            if getenv("admin_login") != username.value or getenv("admin_password") != password.value:
+            print("creds")
+            print(getenv("admin_login"))
+            print(getenv("admin_password"))
+            if "admin" != username.value or "admin" != password.value:
                 show_snack(text="Неверные данные")
             else:
                 page.session.set("is_auth", True)

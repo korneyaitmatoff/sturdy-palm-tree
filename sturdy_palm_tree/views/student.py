@@ -2,6 +2,7 @@ import flet as ft
 from flet_route import Basket, Params
 
 from config import db_config
+from sturdy_palm_tree.src.ai import predict_alcohol_risk
 from sturdy_palm_tree import auth_required
 from sturdy_palm_tree.components import bottom_bar
 from sturdy_palm_tree.src.api.core import tables
@@ -52,7 +53,14 @@ def student(page: ft.Page, params: Params, basket: Basket):
                             value=data["classmates_relations"]
                         )
                     ),
-                    ft.DataCell(ft.Text(data["alcohol_forecast"])),
+                    ft.DataCell(ft.Text(predict_alcohol_risk(
+                        age=data["age"],
+                        gender=data["gender"],
+                        performance=data["performance"],
+                        stress=data["stress"],
+                        family_alcohol=data["family_alcohol"],
+                        classmates_relations=data["classmates_relations"],
+                    ))),
                     ft.DataCell(ft.IconButton(ft.icons.SAVE)),
                 ])
             ]
@@ -88,12 +96,6 @@ def student(page: ft.Page, params: Params, basket: Basket):
 
                     ]
                 )]
-            ),
-            ft.Row(
-                controls=[ft.CupertinoButton("Запустить прогнозирование")]
-            ),
-            ft.Row(
-                controls=[ft.Text("Последнее обновление: 12.11.2024 22:11")]
             ),
             ft.Row(
                 controls=[ft.CupertinoButton("Ссылка на опрос для данного студента",

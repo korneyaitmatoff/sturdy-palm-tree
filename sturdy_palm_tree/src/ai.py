@@ -36,15 +36,10 @@ def predict_alcohol_risk(age, gender, performance, stress, family_alcohol, class
     model.fit(X_train, y_train)
     gender = 1 if gender.upper() == 'M' else 0
     input_data = [[age, gender, performance, stress, family_alcohol, classmates_relations]]
-    risk_percentage = model.predict_proba(input_data)[0][1] * 100
+    risk_percentage = model.predict_proba(input_data)[0][1] * 10000
 
     y_pred = model.predict(X_test)
     accuracy = accuracy_score(y_test, y_pred)
     print("Точность модели:", accuracy)
 
-    return risk_percentage
-
-
-risk = predict_alcohol_risk(18, 'M', 50, 1, 1, 1)
-
-print(f"Риск алкогольной зависимости: {risk}%")
+    return round(risk_percentage)

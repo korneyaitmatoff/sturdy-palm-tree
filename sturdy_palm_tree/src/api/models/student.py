@@ -1,21 +1,21 @@
-from enum import StrEnum
+from enum import Enum
 
 from pydantic import BaseModel, StrictStr, StrictInt
 
 
-class Gender(StrEnum):
+class Gender(Enum):
     MALE = "М"
     FEMALE = "Ж"
 
     @staticmethod
     def list():
-        return [Gender.MALE, Gender.FEMALE]
+        return [Gender.MALE.value, Gender.FEMALE.value]
 
 
 class Student(BaseModel):
     id: StrictInt | None = None
     name: StrictStr
-    gender: Gender
+    gender: str
     age: StrictInt
     performance: StrictInt  # from 0 to 100
     stress: StrictInt  # уровень стресса от 0 до 10
