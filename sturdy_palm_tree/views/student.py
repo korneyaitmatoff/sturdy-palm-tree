@@ -17,6 +17,15 @@ def student(page: ft.Page, params: Params, basket: Basket):
 
         return {key: item for key, item in data[0].__dict__.items() if "_" != key[0]}
 
+    s_id = params.get("sid")
+
+    dt = _get_student(id=s_id)
+    del dt["id"]
+    del dt["name"]
+    del dt["alcohol_forecast"]
+
+    ai_predict = predict_alcohol_risk(**dt)
+
     def _get_student_table(data: dict):
         return ft.DataTable(
             columns=[
@@ -27,7 +36,6 @@ def student(page: ft.Page, params: Params, basket: Basket):
                 ft.DataColumn(ft.Text("Уровень стресса")),
                 ft.DataColumn(ft.Text("Алкоголь в семье")),
                 ft.DataColumn(ft.Text("Давление со стороны одноклассников")),
-                ft.DataColumn(ft.Text("Склонность к алкоголизму")),
                 ft.DataColumn(ft.Text("")),
             ],
             rows=[
@@ -53,20 +61,11 @@ def student(page: ft.Page, params: Params, basket: Basket):
                             value=data["classmates_relations"]
                         )
                     ),
-                    ft.DataCell(ft.Text(predict_alcohol_risk(
-                        age=data["age"],
-                        gender=data["gender"],
-                        performance=data["performance"],
-                        stress=data["stress"],
-                        family_alcohol=data["family_alcohol"],
-                        classmates_relations=data["classmates_relations"],
-                    ))),
                     ft.DataCell(ft.IconButton(ft.icons.SAVE)),
                 ])
             ]
         )
 
-    s_id = params.get("sid")
     return ft.View(
         route="/student",
         controls=[
@@ -96,6 +95,13 @@ def student(page: ft.Page, params: Params, basket: Basket):
 
                     ]
                 )]
+            ),
+            ft.Row(
+                controls=[
+                    ft.Text(f"Прогноз склоннисти к алкоголизму, сформированный ИИ: {ai_predict} %\n"
+                            f"Данный прогноз не является диагнозом, для постановки диагноза требуется консультация "
+                            f"специалиста")
+                ]
             ),
             ft.Row(
                 controls=[ft.CupertinoButton("Ссылка на опрос для данного студента",

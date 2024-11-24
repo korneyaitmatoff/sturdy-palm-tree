@@ -1,19 +1,4 @@
-from config import db_config
-from sturdy_palm_tree.src.api.core.db_handler import DatabaseHandler
-from sturdy_palm_tree.src.api.core import tables
-
-if __name__ == "__main__":
-    with DatabaseHandler(**db_config) as db:
-        db.create_tables(meta=tables.base)
-
-        d = db.execute_raw(
-            raw="create view audit_sum as select id, s_id, created_at, field_1 + field_2 + field_3 + field_4 + "
-                "field_5 + field_6 + field_7 + field_8 + field_9 + field_10 as sn from audit_polls",
-            is_ddl=True)
-
-        d = db.execute_raw(
-            raw="""
-                INSERT INTO students (age, gender, performance, stress, family_alcohol, classmates_relations, alcohol_forecast) VALUES
+INSERT INTO students (age, gender, performance, stress, family_alcohol, classmates_relations, alcohol_forecast) VALUES
 (5, 'М', 25, 8, TRUE, FALSE, 65),
 (9, 'М', 6, 9, TRUE, TRUE, 75),
 (13, 'М', 47, 9, TRUE, FALSE, 89),
@@ -114,6 +99,3 @@ if __name__ == "__main__":
 (14, 'Ж', 31, 8, FALSE, TRUE, 60),
 (9, 'М', 23, 8, TRUE, TRUE, 67),
 (9, 'М', 39, 1, FALSE, TRUE, 14);
-            """,
-            is_ddl=True
-        )
